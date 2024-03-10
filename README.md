@@ -34,6 +34,65 @@ python ServoApp.py
 
 ## Mini-IDE Commands
 
+Here are the "types" of code you can use within the constraints of the current system:
+
+### 1. Servo Control
+The primary capability of your mini-IDE is controlling the virtual servo's angle. The `servo_turn` function is explicitly made available for execution:
+
+```python
+servo_turn(45)  # Rotates the servo to 45 degrees
+servo_turn(180)  # Rotates the servo to 180 degrees
+servo_turn(0)  # Rotates the servo back to 0 degrees
+```
+
+### 2. Python Standard Operations
+Beyond controlling the servo, the mini-IDE can run any standard Python code that doesn't require additional context or access to external functions and variables not explicitly provided. This includes:
+
+- Mathematical operations:
+    ```python
+    result = 10 * 5  # Multiplication
+    print(result)
+    ```
+  
+- Conditional statements:
+    ```python
+    angle = 90
+    if angle > 45:
+        servo_turn(angle)
+    else:
+        servo_turn(0)
+    ```
+  
+- Loops:
+    ```python
+    for angle in range(0, 181, 45):
+        servo_turn(angle)
+        # Assume you add a way to pause between movements
+    ```
+
+### 3. Python Built-in Functions
+You can use Python's built-in functions as long as they don't require access to the restricted context:
+
+```python
+print("Rotating servo")
+servo_turn(90)
+print("Rotation complete")
+```
+
+### Limitations and Security Concerns
+The use of `exec` to run code entered into a mini-IDE presents significant security risks, particularly with unrestricted access to Python's capabilities. In your current implementation, the risks are somewhat mitigated by providing a very limited execution context (`allowed_funcs`), but it's essential to be aware of the security implications, especially if expanding the system's capabilities or making it accessible to others.
+
+### Expanding Capabilities
+If you want to expand the types of code users can execute in your mini-IDE, you'll need to:
+
+1. **Define Additional Functions**: Create more functions in your Python script that perform different operations on the servo or provide new functionalities. 
+
+2. **Expose Functions to the Execution Context**: Add these functions to the `allowed_funcs` dictionary passed to `exec`. This will make them available for use within the mini-IDE.
+
+3. **Consider Security**: Carefully consider the implications of exposing more functionality, especially if it interacts with the file system, network, or other sensitive resources.
+
+For a more interactive and educational experience, consider implementing error handling within the IDE's UI to provide feedback on syntax errors or exceptions raised by user-entered code.
+
 Within the mini-IDE, you can use the following command to control the servo:
 
 ```python
